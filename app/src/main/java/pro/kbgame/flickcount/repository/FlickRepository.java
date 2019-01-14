@@ -1,8 +1,13 @@
 package pro.kbgame.flickcount.repository;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
+import pro.kbgame.flickcount.common.FileUtils;
+import pro.kbgame.flickcount.common.JSONHelper;
 import pro.kbgame.flickcount.model.Flick;
+import pro.kbgame.flickcount.view.MainActivity;
 
 public class FlickRepository {
 
@@ -16,27 +21,35 @@ public class FlickRepository {
         return instance;
     }
 
-    public interface OnGetAllFlicksCallBack  {
+    public interface OnGetAllFlicksCallBack {
 
         public void onGetAllFlicks(ArrayList<Flick> allFlicks);
 
     }
 
 
-    public void getAllFlicks(OnGetAllFlicksCallBack callBack){
-        if (allFlicks == null){
-            allFlicks = new ArrayList<>();
-            allFlicks.add(Flick.getFakeFlick());
-            allFlicks.add(Flick.getFakeFlick());
-            allFlicks.add(Flick.getFakeFlick());
-            allFlicks.add(Flick.getFakeFlick());
+    public void getAllFlicks(OnGetAllFlicksCallBack callBack) {
+
+        if (allFlicks == null) {
+            allFlicks = JSONHelper.getInstance().getFlickArray(FileUtils.getInstance().readFromFile());
+            if (allFlicks == null) {
+                allFlicks = new ArrayList<Flick>();
+            }
         }
-
         callBack.onGetAllFlicks(allFlicks);
-
     }
 
-    //addFlick (Flick flick)
-    //check load arrayList
+    public void addFlick(final Flick flick) {
+        getAllFlicks(new OnGetAllFlicksCallBack() {
+            @Override
+            public void onGetAllFlicks(ArrayList<Flick> allFlicks) {
+                allFlicks.add(flick);
+
+                String data = JSONHelper.getInstance().getArrayInJsonString(allFlicks);
+                Context ctx = MainActivity.getInstance().getApplicationContext();
+                FileUtils.getInstance().writeInFile(data, ctx);
+            }
+        });
+    }
 
 }
