@@ -39,16 +39,24 @@ public class MainActivity extends AppCompatActivity {
         txtId = findViewById(R.id.txtId);
         txtCause = findViewById(R.id.txtCause);
 
-        int lastId = FlickRepository.getInstance().getLastFlickId();
-        int currentID = lastId++;
-        String currentIsInText = String.valueOf(currentID);
-        txtId.setText(currentIsInText);
+
+        String currentIdInText = String.valueOf(getCurrentId());
+        txtId.setText(currentIdInText);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Flick flick = new Flick();
+
+                flick.setId(getCurrentId());
+                flick.setCause(txtCause.getText().toString());
+                flick.setDate(new Date());
+                FlickRepository.getInstance().addFlick(flick);
+
+                String currentIdInText = String.valueOf(getCurrentId());  //Refactor! Maybe to fast.
+                txtId.setText(currentIdInText);
 
             }
         });
@@ -80,5 +88,13 @@ public class MainActivity extends AppCompatActivity {
 
     public static MainActivity getInstance(){
         return instance;
+    }
+
+
+
+    private int getCurrentId(){
+        int lastFlickId = FlickRepository.getInstance().getLastFlickId();
+        int currentID = ++lastFlickId;
+        return currentID;
     }
 }
