@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
                 String currentIdInText = String.valueOf(getCurrentId());  //Refactor! Maybe to fast.
                 txtId.setText(currentIdInText);
+                txtCause.setText("");
 
             }
         });
