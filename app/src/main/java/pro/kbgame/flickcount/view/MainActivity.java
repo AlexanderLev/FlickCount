@@ -10,7 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.TextureView;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,6 +25,8 @@ import pro.kbgame.flickcount.repository.FlickRepository;
 
 public class MainActivity extends AppCompatActivity {
     private static MainActivity instance;
+    private TextView txtId;
+    private TextView txtCause;
 
 
     @Override
@@ -32,6 +36,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         instance = this;
+        txtId = findViewById(R.id.txtId);
+        txtCause = findViewById(R.id.txtCause);
+
+        int lastId = FlickRepository.getInstance().getLastFlickId();
+        int currentID = lastId++;
+        String currentIsInText = String.valueOf(currentID);
+        txtId.setText(currentIsInText);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

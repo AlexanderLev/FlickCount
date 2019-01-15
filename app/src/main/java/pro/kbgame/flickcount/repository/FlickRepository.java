@@ -52,4 +52,14 @@ public class FlickRepository {
         });
     }
 
+    public int getLastFlickId() {
+        getAllFlicks(new OnGetAllFlicksCallBack() {
+            @Override
+            public void onGetAllFlicks(ArrayList<Flick> allFlicks) {
+
+            }
+        });
+        Flick lastFlick = allFlicks.get(allFlicks.size() - 1);
+        return lastFlick.getId();
+    }
 }
