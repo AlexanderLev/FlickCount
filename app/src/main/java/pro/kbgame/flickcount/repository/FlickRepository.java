@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
+import pro.kbgame.flickcount.common.FileReadTask;
 import pro.kbgame.flickcount.common.FileUtils;
 import pro.kbgame.flickcount.common.JSONHelper;
 import pro.kbgame.flickcount.model.Flick;
@@ -13,6 +14,7 @@ public class FlickRepository {
 
     private static FlickRepository instance;
     private ArrayList<Flick> allFlicks;
+    private final String FILE_NAME = "flickers.base";
 
     public static FlickRepository getInstance() {
         if (instance == null) {
@@ -28,15 +30,26 @@ public class FlickRepository {
     }
 
 
-    public void getAllFlicks(OnGetAllFlicksCallBack callBack) {
+    public void getAllFlicks(final OnGetAllFlicksCallBack callBack) {
 
         if (allFlicks == null) {
-            allFlicks = JSONHelper.getInstance().getFlickArray(FileUtils.getInstance().readFromFile());
-            if (allFlicks == null) {
-                allFlicks = new ArrayList<Flick>();
-            }
+
+            FileReadTask fileReadTask = new FileReadTask(MainActivity.getInstance(), FILE_NAME, new FileReadTask.OnReadFileCallBack() {
+                @Override
+                public void onReadFile(String fileData) {
+                    allFlicks = JSONHelper.getInstance().getFlickArray(fileData);
+                    if (allFlicks == null) {
+                        allFlicks = new ArrayList<Flick>();
+                    }
+                    callBack.onGetAllFlicks(allFlicks);
+                }
+            });
+            fileReadTask.execute();
+
         }
-        callBack.onGetAllFlicks(allFlicks);
+        else{
+            callBack.onGetAllFlicks(allFlicks);
+        }
     }
 
     public void addFlick(final Flick flick) {
@@ -52,14 +65,9 @@ public class FlickRepository {
         });
     }
 
-    public int getLastFlickId() {
-        getAllFlicks(new OnGetAllFlicksCallBack() {
-            @Override
-            public void onGetAllFlicks(ArrayList<Flick> allFlicks) {
 
-            }
-        });
-        Flick lastFlick = allFlicks.get(allFlicks.size() - 1);
-        return lastFlick.getId();
+
+    public ArrayList<Flick> getFlicksByDate(){
+        return null;
     }
 }

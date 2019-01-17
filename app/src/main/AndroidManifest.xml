@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".view.DateSelectActivity"></activity>
         <activity
             android:name=".view.MainActivity"
             android:label="@string/title_activity_main"
@@ -19,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.ArchiveActivity"></activity>
+        <activity android:name=".view.ArchiveActivity" />
     </application>
 
 </manifest>

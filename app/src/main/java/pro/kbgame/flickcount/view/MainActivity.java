@@ -1,19 +1,14 @@
 package pro.kbgame.flickcount.view;
 
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.MathUtils;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.TextureView;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -21,8 +16,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import pro.kbgame.flickcount.R;
-import pro.kbgame.flickcount.common.FileUtils;
-import pro.kbgame.flickcount.common.JSONHelper;
 import pro.kbgame.flickcount.model.Flick;
 import pro.kbgame.flickcount.repository.FlickRepository;
 
@@ -30,8 +23,9 @@ public class MainActivity extends AppCompatActivity {
     private static MainActivity instance;
     private TextView txtId;
     private TextView txtCause;
-    private Calendar dateAndTime;
-
+    private int counter;
+    private FloatingActionButton fab;
+    private FlickRepository.OnGetAllFlicksCallBack loadCallBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,27 +37,33 @@ public class MainActivity extends AppCompatActivity {
         txtId = findViewById(R.id.txtId);
         txtCause = findViewById(R.id.txtCause);
 
+        loadCallBack = new FlickRepository.OnGetAllFlicksCallBack() {
 
-        String currentIdInText = String.valueOf(getCurrentId());
-        txtId.setText(currentIdInText);
+            @Override
+            public void onGetAllFlicks(ArrayList<Flick> allFlicks) {
 
+                initCounter(allFlicks);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+                updateCounterUI();
+
+                makeUiEnable();
+            }
+        };
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Flick flick = new Flick();
-                flick.setId(getCurrentId());
-                flick.setCause(txtCause.getText().toString());
-                flick.setDate(new Date());
-                FlickRepository.getInstance().addFlick(flick);
-
-                String currentIdInText = String.valueOf(getCurrentId());  //Refactor! Maybe to fast.
-                txtId.setText(currentIdInText);
-                txtCause.setText("");
-
+                addNewFlickInRepo();
+                prepareUiForNewFlick();
             }
         });
+
+        makeUiDisable();
+
+        loadFlicks();
+
     }
 
     @Override
@@ -75,13 +75,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.action_archive) {
-           /* Intent intent = new Intent(MainActivity.this, ArchiveActivity.class);
-            startActivity(intent);*/
-           dateAndTime = Calendar.getInstance();
-           showDateDialog();
-            return true;
+            Intent intent = new Intent(MainActivity.this, ArchiveActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -92,33 +88,47 @@ public class MainActivity extends AppCompatActivity {
         return super.getApplicationContext();
     }
 
-    public void showDateDialog() {
-        new DatePickerDialog(MainActivity.this, onDateSetListener,
-                dateAndTime.get(Calendar.YEAR),
-                dateAndTime.get(Calendar.MONTH),
-                dateAndTime.get(Calendar.DAY_OF_MONTH))
-                .show();
+    public void loadFlicks() {
+        FlickRepository.getInstance().getAllFlicks(loadCallBack);
+
     }
 
-    DatePickerDialog.OnDateSetListener onDateSetListener =new DatePickerDialog.OnDateSetListener() {
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            dateAndTime.set(Calendar.YEAR, year);
-            dateAndTime.set(Calendar.MONTH, monthOfYear);
-            dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        }
-    };
-
-
-
-    public static MainActivity getInstance(){
+    public static MainActivity getInstance() {
         return instance;
     }
 
-
-
-    private int getCurrentId(){
-        int lastFlickId = FlickRepository.getInstance().getLastFlickId();
-        int currentID = ++lastFlickId;
-        return currentID;
+    private void prepareUiForNewFlick() {
+        counter++;
+        String currentIdInText = String.valueOf(counter);
+        txtId.setText(currentIdInText);
+        txtCause.setText("");
     }
+
+    private void addNewFlickInRepo() {
+        Flick flick = new Flick();
+        flick.setId(counter);
+        flick.setCause(txtCause.getText().toString());
+        flick.setDate(new Date());
+        FlickRepository.getInstance().addFlick(flick);
+    }
+
+    private void makeUiDisable() {
+        fab.setEnabled(false);
+    }
+
+    private void makeUiEnable() {
+        fab.setEnabled(true);
+    }
+
+    private void updateCounterUI() {
+        String currentIdInText = String.valueOf(counter);
+        txtId.setText(currentIdInText);
+    }
+
+    private void initCounter(ArrayList<Flick> allFlicks) {
+        Flick lastFlick = allFlicks.get(allFlicks.size() - 1);
+        counter = lastFlick.getId();
+        counter++;
+    }
+
 }

@@ -9,4 +9,6 @@
     <string name="example_id">123</string>
     <string name="example_cause">Stupid cause.</string>
     <string name="archive">Archive</string>>
+    <string name="enter_start_date">Enter start date</string>
+    <string name="enter_end_date">Enter end date</string>
 </resources>

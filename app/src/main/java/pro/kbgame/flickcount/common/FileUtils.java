@@ -41,28 +41,7 @@ public class FileUtils {
         }
     }
 
-    public String readFromFile() {
-        StringBuilder stringBuilder = new StringBuilder();
-        File dir = MainActivity.getInstance().getApplicationContext().getFilesDir();
-        File file = new File(dir, FILE_NAME);
-        try {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
-            String line = null;
-            try {
-                while ((line = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return stringBuilder.toString();
-    }
 
     public static FileUtils getInstance() {
         if (instance == null) {
