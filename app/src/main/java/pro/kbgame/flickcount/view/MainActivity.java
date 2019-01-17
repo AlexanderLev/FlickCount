@@ -1,5 +1,6 @@
 package pro.kbgame.flickcount.view;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,9 +13,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.TextureView;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import pro.kbgame.flickcount.R;
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private static MainActivity instance;
     private TextView txtId;
     private TextView txtCause;
+    private Calendar dateAndTime;
 
 
     @Override
@@ -49,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Flick flick = new Flick();
-
                 flick.setId(getCurrentId());
                 flick.setCause(txtCause.getText().toString());
                 flick.setDate(new Date());
@@ -74,8 +77,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_archive) {
-            Intent intent = new Intent(MainActivity.this, ArchiveActivity.class);
-            startActivity(intent);
+           /* Intent intent = new Intent(MainActivity.this, ArchiveActivity.class);
+            startActivity(intent);*/
+           dateAndTime = Calendar.getInstance();
+           showDateDialog();
             return true;
         }
 
@@ -86,6 +91,24 @@ public class MainActivity extends AppCompatActivity {
     public Context getApplicationContext() {
         return super.getApplicationContext();
     }
+
+    public void showDateDialog() {
+        new DatePickerDialog(MainActivity.this, onDateSetListener,
+                dateAndTime.get(Calendar.YEAR),
+                dateAndTime.get(Calendar.MONTH),
+                dateAndTime.get(Calendar.DAY_OF_MONTH))
+                .show();
+    }
+
+    DatePickerDialog.OnDateSetListener onDateSetListener =new DatePickerDialog.OnDateSetListener() {
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            dateAndTime.set(Calendar.YEAR, year);
+            dateAndTime.set(Calendar.MONTH, monthOfYear);
+            dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        }
+    };
+
+
 
     public static MainActivity getInstance(){
         return instance;
