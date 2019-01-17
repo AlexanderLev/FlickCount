@@ -126,8 +126,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initCounter(ArrayList<Flick> allFlicks) {
-        Flick lastFlick = allFlicks.get(allFlicks.size() - 1);
-        counter = lastFlick.getId();
+        if (allFlicks.size() > 0){
+            Flick lastFlick = allFlicks.get(allFlicks.size() - 1);
+            counter = lastFlick.getId();
+        }
         counter++;
     }
 
