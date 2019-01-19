@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Счетчик щелбанов</string>
+    <string name="title_activity_main">Счетчик щелбанов</string>
+    <string name="cause">Причина</string>
+    <string name="action_settings">установки</string>
+    <string name="archive">Архив</string>
+    <string name="enter_start_date">Ввод начальной даты</string>
+    <string name="enter_end_date">Ввод конечной даты</string>
+    <string name="id">щелбан</string>
+    <string name="id_number">Щелбан номер:</string>
+    <string name="example_date">03.02.2013 13:13</string>
+    <string name="example_id">123</string>
+    <string name="example_cause">Глупая причина</string>
+</resources>
