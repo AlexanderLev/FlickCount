@@ -2,16 +2,10 @@ package pro.kbgame.flickcount.common;
 
 import android.content.Context;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-import pro.kbgame.flickcount.view.MainActivity;
 
 public class FileUtils {
     private static FileUtils instance;

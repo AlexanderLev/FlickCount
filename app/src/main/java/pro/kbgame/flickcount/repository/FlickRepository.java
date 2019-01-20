@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.ArrayList;
 
 import pro.kbgame.flickcount.common.FileReadTask;
+import pro.kbgame.flickcount.common.FileSaveTask;
 import pro.kbgame.flickcount.common.FileUtils;
 import pro.kbgame.flickcount.common.JSONHelper;
 import pro.kbgame.flickcount.model.Flick;
@@ -62,7 +63,14 @@ public class FlickRepository {
 
                 String data = JSONHelper.getInstance().getArrayInJsonString(allFlicks);
                 Context ctx = MainActivity.getInstance().getApplicationContext();
-                FileUtils.getInstance().writeInFile(data, ctx); //TODO Repalce on FileSaveTask
+
+                FileSaveTask fileSaveTask = new FileSaveTask(ctx, data, FILE_NAME, new FileSaveTask.OnSaveFileCallBack() {
+                    @Override
+                    public void onSaveFile() {
+
+                    }
+                });
+                fileSaveTask.execute(); //TODO Explane this.
             }
         });
     }

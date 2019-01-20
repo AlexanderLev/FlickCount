@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
         String currentIdInText = String.valueOf(counter);
         txtId.setText(currentIdInText);
         txtCause.setText("");
+        setActivityTitle();
     }
 
     private void addNewFlickInRepo() {
