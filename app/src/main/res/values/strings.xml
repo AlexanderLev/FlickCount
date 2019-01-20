@@ -15,4 +15,7 @@
     <string name="save_flick">Save flick?</string>
     <string name="yes">yes</string>
     <string name="no">no</string>
+    <string name="select">select</string>
+    <string name="start_date">Start date</string>
+    <string name="end_date">End date</string>
 </resources>

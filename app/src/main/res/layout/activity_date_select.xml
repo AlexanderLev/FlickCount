@@ -5,12 +5,39 @@
     android:gravity="center"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <TextView
+        android:id="@+id/textStartDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TextSubHeadersInApp"
+        android:paddingTop="4dp"
+        android:text="@string/start_date"/>
+
 
     <DatePicker
-        android:id="@+id/datePicker"
+        android:id="@+id/datePickerStartDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false"
+        android:spinnersShown="true" />
+
+    <TextView
+        android:id="@+id/textEndDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TextSubHeadersInApp"
+        android:text="@string/end_date"/>
+
+    <DatePicker
+        android:id="@+id/datePickerEndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false"
+        android:spinnersShown="true" />
 
     <Button
         android:id="@+id/buttonSetDate"
@@ -18,5 +45,5 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:onClick="onButtonSetDateClick"
-        android:text="Button" />
+        android:text="@string/select" />
 </LinearLayout>

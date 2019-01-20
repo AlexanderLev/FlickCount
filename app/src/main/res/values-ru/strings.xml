@@ -16,4 +16,7 @@
     <string name="save_flick">Сохранить щелбан?</string>
     <string name="yes">да</string>
     <string name="no">нет</string>
+    <string name="select">выбрать</string>
+    <string name="start_date">Начальная дата</string>
+    <string name="end_date">Конечная дата</string>
 </resources>

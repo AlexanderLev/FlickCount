@@ -12,7 +12,6 @@ public class FileSaveTask extends AsyncTask {
     private OnSaveFileCallBack callBack;
     private String formattedString;
     private String fileName;
-            //FILE_NAME = "flickers.base";
 
     public interface OnSaveFileCallBack {
 
@@ -35,7 +34,6 @@ public class FileSaveTask extends AsyncTask {
 
     @Override
     protected void onPostExecute(Object o) {
-        //super.onPostExecute(o);
         callBack.onSaveFile();
     }
 
