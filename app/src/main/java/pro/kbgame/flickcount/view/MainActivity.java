@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
                 updateCounterUI();
 
+                setActivityTitle();
+
                 makeUiEnable();
             }
         };
@@ -131,6 +133,12 @@ public class MainActivity extends AppCompatActivity {
             counter = lastFlick.getId();
         }
         counter++;
+    }
+
+    private void setActivityTitle(){
+        String idNumber = getResources().getString(R.string.number_of_flick);
+        String title = idNumber + ": " + counter;
+        setTitle(title);
     }
 
 }

@@ -11,7 +11,8 @@ public class FileSaveTask extends AsyncTask {
     private Context ctx;
     private OnSaveFileCallBack callBack;
     private String formattedString;
-    private final String FILE_NAME = "flickers.base";
+    private String fileName;
+            //FILE_NAME = "flickers.base";
 
     public interface OnSaveFileCallBack {
 
@@ -19,14 +20,13 @@ public class FileSaveTask extends AsyncTask {
 
     }
 
-    public FileSaveTask (Context ctx, String formattedString, OnSaveFileCallBack callBack){
+    public FileSaveTask (Context ctx, String formattedString, String fileName,  OnSaveFileCallBack callBack){
         this.ctx = ctx;
         this.formattedString = formattedString;
+        this.fileName = fileName;
         this.callBack = callBack;
 
     }
-
-
 
     @Override
     protected Object doInBackground(Object[] objects) {
@@ -43,7 +43,7 @@ public class FileSaveTask extends AsyncTask {
         FileOutputStream fileOutputStream = null;
 
         try {
-            fileOutputStream = ctx.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
+            fileOutputStream = ctx.openFileOutput(fileName, Context.MODE_PRIVATE);
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream, "UTF-8");
             outputStreamWriter.write(formattedString);
             outputStreamWriter.flush();

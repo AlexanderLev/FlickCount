@@ -52,6 +52,8 @@ public class FlickRepository {
         }
     }
 
+
+
     public void addFlick(final Flick flick) {
         getAllFlicks(new OnGetAllFlicksCallBack() {
             @Override
@@ -60,7 +62,7 @@ public class FlickRepository {
 
                 String data = JSONHelper.getInstance().getArrayInJsonString(allFlicks);
                 Context ctx = MainActivity.getInstance().getApplicationContext();
-                FileUtils.getInstance().writeInFile(data, ctx);
+                FileUtils.getInstance().writeInFile(data, ctx); //TODO Repalce on FileSaveTask
             }
         });
     }
