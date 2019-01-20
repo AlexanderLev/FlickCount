@@ -13,4 +13,7 @@
     <string name="example_id">123</string>
     <string name="example_cause">Глупая причина</string>
     <string name="number_of_flick">Номер щелбана</string>
+    <string name="save_flick">Сохранить щелбан?</string>
+    <string name="yes">да</string>
+    <string name="no">нет</string>
 </resources>

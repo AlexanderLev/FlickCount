@@ -1,9 +1,11 @@
 package pro.kbgame.flickcount.view;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -57,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addNewFlickInRepo();
-                prepareUiForNewFlick();
+
+                showSaveConfirmationAlertDialog();
             }
         });
 
@@ -140,6 +142,30 @@ public class MainActivity extends AppCompatActivity {
         String idNumber = getResources().getString(R.string.number_of_flick);
         String title = idNumber + ": " + counter;
         setTitle(title);
+    }
+
+    private void showSaveConfirmationAlertDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle(R.string.save_flick)
+                .setPositiveButton(R.string.yes,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                addNewFlickInRepo();
+                                prepareUiForNewFlick();
+
+                            }
+                        })
+                .setNegativeButton(R.string.no,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
 }
