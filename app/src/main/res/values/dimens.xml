@@ -1,6 +1,7 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="ID_text_big_size">24sp</dimen>
-    <dimen name="subHeadersTextSize">20sp</dimen>
+    <dimen name="subHeadersTextSize">16sp</dimen>
     <dimen name="subHeadersPadding">8dp</dimen>
+    <dimen name="rightPadding">16dp</dimen>
 </resources>
