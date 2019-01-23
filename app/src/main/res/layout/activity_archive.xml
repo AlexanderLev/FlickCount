@@ -5,6 +5,39 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TextSubHeadersInApp"
+        android:paddingTop="4dp"
+        android:text="@string/start_date"/>
+
+    <TextView
+        android:id="@+id/lblStartDate"
+        android:clickable="true"
+        android:onClick="onLblStartDateClick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TextSubHeadersInApp"
+        android:hint="@string/select_start_date_here"
+    />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TextSubHeadersInApp"
+        android:paddingTop="4dp"
+        android:text="@string/end_date"/>
+
+    <TextView
+        android:id="@+id/lblEndDate"
+        android:clickable="true"
+        android:onClick="onLblEndDateClick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TextSubHeadersInApp"
+        android:hint="@string/select_end_date_here"/>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewAllFlicks"

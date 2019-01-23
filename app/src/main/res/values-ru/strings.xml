@@ -19,4 +19,6 @@
     <string name="select">выбрать</string>
     <string name="start_date">Начальная дата</string>
     <string name="end_date">Конечная дата</string>
+    <string name="select_start_date_here">Выберите начальную дату здесь</string>
+    <string name="select_end_date_here">Выберите конечную дату здесь</string>
 </resources>

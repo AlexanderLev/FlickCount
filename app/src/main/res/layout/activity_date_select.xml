@@ -5,13 +5,7 @@
     android:gravity="center"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/textStartDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/TextSubHeadersInApp"
-        android:paddingTop="4dp"
-        android:text="@string/start_date"/>
+
 
 
     <DatePicker
@@ -23,12 +17,7 @@
         android:calendarViewShown="false"
         android:spinnersShown="true" />
 
-    <TextView
-        android:id="@+id/textEndDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/TextSubHeadersInApp"
-        android:text="@string/end_date"/>
+
 
     <DatePicker
         android:id="@+id/datePickerEndDate"

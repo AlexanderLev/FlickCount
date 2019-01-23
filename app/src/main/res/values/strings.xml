@@ -18,4 +18,6 @@
     <string name="select">select</string>
     <string name="start_date">Start date</string>
     <string name="end_date">End date</string>
+    <string name="select_start_date_here">Select start date here</string>
+    <string name="select_end_date_here">Select end date here</string>
 </resources>
