@@ -20,4 +20,6 @@
     <string name="end_date">End date:</string>
     <string name="select_start_date_here">Select start date here</string>
     <string name="select_end_date_here">Select end date here</string>
+    <string name="start_date_can_not_be_after_end_date">Start date can`t be after end date!</string>
+    <string name="end_date_can_not_be_before_satrt_date">End date can`t be before start date!</string>
 </resources>

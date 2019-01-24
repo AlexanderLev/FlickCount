@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,9 +50,14 @@ public class ArchiveActivity extends AppCompatActivity {
         selectDateDialog(selectStartDate, new OnGetSelectedDateCallBack() {
             @Override
             public void onGetSelectedDate(Date selectedDate) {
-                selectStartDate = selectedDate;
-                dateDisplaying();
-                filtration();
+                if (selectedDate.after(selectEndDate)){
+                    Toast.makeText(ArchiveActivity.this, R.string.start_date_can_not_be_after_end_date, Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    selectStartDate = selectedDate;
+                    dateDisplaying();
+                    filtration();
+                }
             }
         });
 
@@ -61,9 +67,13 @@ public class ArchiveActivity extends AppCompatActivity {
         selectDateDialog(selectEndDate, new OnGetSelectedDateCallBack() {
             @Override
             public void onGetSelectedDate(Date selectedDate) {
-                selectEndDate = selectedDate;
-                dateDisplaying();
-                filtration();
+                if (selectedDate.before(selectStartDate)) {
+                    Toast.makeText(ArchiveActivity.this, R.string.end_date_can_not_be_before_satrt_date, Toast.LENGTH_SHORT).show();
+                } else {
+                    selectEndDate = selectedDate;
+                    dateDisplaying();
+                    filtration();
+                }
             }
         });
 
@@ -92,14 +102,11 @@ public class ArchiveActivity extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, listener, year, month, day);
 
         datePickerDialog.show();
-
     }
 
     public interface OnGetSelectedDateCallBack{
         public void onGetSelectedDate(Date selectedDate);
     }
-
-
 
     private void initStartDate() {
         Calendar calendar = Calendar.getInstance();
@@ -128,7 +135,6 @@ public class ArchiveActivity extends AppCompatActivity {
         lblStartDate.setText(startDate);
         String endDate = sdf.format(selectEndDate);
         lblEndDate.setText(endDate);
-
     }
 
 
