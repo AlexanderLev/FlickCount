@@ -1,8 +1,6 @@
 package pro.kbgame.flickcount.view;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.provider.CalendarContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -48,36 +46,55 @@ public class ArchiveActivity extends AppCompatActivity {
     }
 
     public void onLblStartDateClick(View view) {
-        selectDateDialog(selectStartDate);
+        selectDateDialog(selectStartDate, new OnGetSelectedDateCallBack() {
+            @Override
+            public void onGetSelectedDate(Date selectedDate) {
+                selectStartDate = selectedDate;
+            }
+        });
 
     }
 
     public void onLblEndDateClick(View view) {
-        selectDateDialog(selectEndDate);
+        selectDateDialog(selectEndDate, new OnGetSelectedDateCallBack() {
+            @Override
+            public void onGetSelectedDate(Date selectedDate) {
+                selectEndDate = selectedDate;
+            }
+        });
+
     }
 
 
-    protected void selectDateDialog(Date initDate) {
+    protected void selectDateDialog(final Date initDate, final OnGetSelectedDateCallBack callBack) {
 
-        Calendar calendar = Calendar.getInstance();
+        final Calendar calendar = Calendar.getInstance();
         calendar.setTime(initDate);
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
 
 
         DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                calendar.set(year, month,day);
+                Date selectedDate = calendar.getTime();
+                callBack.onGetSelectedDate(selectedDate);
 
             }
         };
 
-
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, listener, year, month, day);
 
         datePickerDialog.show();
+
     }
+
+    public interface OnGetSelectedDateCallBack{
+        public void onGetSelectedDate(Date selectedDate);
+    }
+
 
 
     private void initStartDate() {
