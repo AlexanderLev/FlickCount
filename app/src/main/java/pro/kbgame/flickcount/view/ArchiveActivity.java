@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -44,23 +45,42 @@ public class ArchiveActivity extends AppCompatActivity {
 
         filtration();
 
-
-
     }
 
-    public void onLblStartDateClick(View view){
+    public void onLblStartDateClick(View view) {
+        selectDateDialog(selectStartDate);
 
     }
 
     public void onLblEndDateClick(View view) {
+        selectDateDialog(selectEndDate);
     }
 
-/*    protected DatePickerDialog selectDateDialog(){
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this);
-    }*/
+
+    protected void selectDateDialog(Date initDate) {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(initDate);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
 
 
-    private void initStartDate(){
+        DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+            }
+        };
+
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, listener, year, month, day);
+
+        datePickerDialog.show();
+    }
+
+
+    private void initStartDate() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         calendar.set(Calendar.DAY_OF_MONTH, 1);
@@ -71,7 +91,7 @@ public class ArchiveActivity extends AppCompatActivity {
         selectStartDate = calendar.getTime();
     }
 
-    private void initEndDate(){
+    private void initEndDate() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
 
@@ -82,7 +102,7 @@ public class ArchiveActivity extends AppCompatActivity {
         selectEndDate = calendar.getTime();
     }
 
-    private void testDateDisplaying(){
+    private void testDateDisplaying() {
         TextView lblStartDate = findViewById(R.id.lblStartDate);
         TextView lblEndDate = findViewById(R.id.lblEndDate);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
@@ -93,13 +113,13 @@ public class ArchiveActivity extends AppCompatActivity {
 
     }
 
-    private void filtration(){
+    private void filtration() {
         FlickRepository.getInstance().getAllFlicks(new FlickRepository.OnGetAllFlicksCallBack() {
             @Override
             public void onGetAllFlicks(ArrayList<Flick> allFlicks) {
                 currentFlicks.clear();
-                for(Flick flick : allFlicks){
-                    if(flick.getDate().after(selectStartDate) && flick.getDate().before(selectEndDate)){
+                for (Flick flick : allFlicks) {
+                    if (flick.getDate().after(selectStartDate) && flick.getDate().before(selectEndDate)) {
                         currentFlicks.add(flick);
                     }
                 }
