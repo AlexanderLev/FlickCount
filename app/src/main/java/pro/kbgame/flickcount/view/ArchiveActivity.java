@@ -23,6 +23,8 @@ public class ArchiveActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     private Date selectStartDate;
     private Date selectEndDate;
+    private ArrayList<Flick> currentFlicks = new ArrayList<Flick>();
+    FlickAdapter flickAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +39,13 @@ public class ArchiveActivity extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
+        flickAdapter = new FlickAdapter(currentFlicks);
+        recyclerView.setAdapter(flickAdapter);
 
-        FlickRepository.getInstance().getAllFlicks(new FlickRepository.OnGetAllFlicksCallBack() {
-            @Override
-            public void onGetAllFlicks(ArrayList<Flick> allFlicks) {
-                FlickAdapter flickAdapter = new FlickAdapter(allFlicks);
-                recyclerView.setAdapter(flickAdapter);
-            }
-        });
+        filtration();
+
+
+
     }
 
     public void onLblStartDateClick(View view){
@@ -90,6 +91,21 @@ public class ArchiveActivity extends AppCompatActivity {
         String endDate = sdf.format(selectEndDate);
         lblEndDate.setText(endDate);
 
+    }
+
+    private void filtration(){
+        FlickRepository.getInstance().getAllFlicks(new FlickRepository.OnGetAllFlicksCallBack() {
+            @Override
+            public void onGetAllFlicks(ArrayList<Flick> allFlicks) {
+                currentFlicks.clear();
+                for(Flick flick : allFlicks){
+                    if(flick.getDate().after(selectStartDate) && flick.getDate().before(selectEndDate)){
+                        currentFlicks.add(flick);
+                    }
+                }
+                flickAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
 }
